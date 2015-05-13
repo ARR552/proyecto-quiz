@@ -28,6 +28,28 @@ app.use(session());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+app.use(function(req, res, next){
+	if(req.session.user){
+		if(req.session.time){
+			var datossesion = new Date(req.session.time);
+			var duracion= (new Date() - datossesion)/1000;
+			console.log('antes del if');		
+				if (duracion >= 120){
+					console.log('justo borrando la sesion del usuario por inactividad');
+					delete req.session.user;
+			
+				}
+		}
+	
+	req.session.time = (new Date()).toString();
+	}
+	next();
+	
+});
+
+
 //helpers dinamicos:
 app.use(function(req, res, next){
 
