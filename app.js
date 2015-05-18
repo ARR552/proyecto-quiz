@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var partials = require('express-partials');
 var methodOverride = require('method-override');
 var session = require('express-session');
+//var https = require("https")
 
 var routes = require('./routes/index');
 //var author = require('./routes/author');
@@ -22,7 +23,7 @@ app.use(partials());
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser('Quiz 2015'));
 app.use(session());
 app.use(methodOverride('_method'));
@@ -35,9 +36,9 @@ app.use(function(req, res, next){
 		if(req.session.time){
 			var datossesion = new Date(req.session.time);
 			var duracion= (new Date() - datossesion)/1000;
-			console.log('antes del if');		
+			//console.log('antes del if');		
 				if (duracion >= 120){
-					console.log('justo borrando la sesion del usuario por inactividad');
+					//console.log('justo borrando la sesion del usuario por inactividad');
 					delete req.session.user;
 			
 				}
