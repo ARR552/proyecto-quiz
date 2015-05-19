@@ -106,7 +106,7 @@ exports.destroy = function(req, res){
 
 // STATISTICS /quizes/statistics
 exports.statistics = function(req, res){
-      models.Quiz.findAll({include: [{ model: models.Comment}]}).then(function(quizes) {
+      models.Quiz.findAll({include: [{ model: models.Comment }]}).then(function(quizes) {
 	res.render('quizes/statistics', {quizes: quizes, title: 'Estadísticas', errors: [] });
 });
 };
