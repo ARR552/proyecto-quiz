@@ -32,13 +32,16 @@ exports.load = function(req, res, next, quizId){
 // GET /quizes
 
 exports.index = function(req, res){
-      //models.Quiz.findAll().then(function(quizes) {
+     var options = {};
+	if(req.user){
+	options.where = {UserId: req.user.id}
+	}
 	if(req.query.search){
 	//console.log('ha entrado en el if de busqueda');
 	models.Quiz.findAll({where: ["pregunta like ?", '%' + req.query.search + '%'], order: 'pregunta ASC'}).then(function(quizes){ res.render('quizes/index.ejs', {quizes: quizes, title: 'Listado', errors: [] })}).catch(function(error) { next(error);});
 	}else{
 	//console.log('ha entrado en el if normal');
-	models.Quiz.findAll().then(function(quizes) {
+	models.Quiz.findAll(options).then(function(quizes) {
 	res.render('quizes/index.ejs', {quizes: quizes, title: 'Listado', errors: [] });
 }).catch(function(error) { next(error);});
 };

@@ -28,8 +28,11 @@
 	<span><ul><li><a href="/">Inicio</a></li></ul></span>
 	<span><ul><li><a href="/quizes">Preguntas</a></li></ul></span> 
 	<span><ul><li><a href="/quizes/statistics">Estadísticas</a></li></ul></span>   
+	<%if(session.user){%>
+	<span><ul><li><a href="/user/<%=session.user.id%>/quizes">Mis preguntas</a></li></ul></span>
+	<%}%>
 	<span><ul><li><a href="/author">Créditos</a></li></ul></span>   
-
+	
   </nav>
   <section class="main" id="s1">
   <% if (errors.length) { %>
