@@ -1,5 +1,19 @@
 var models = require('../models/models.js');
 
+
+exports.ownershipRequired = function(req, res, next){
+    var objQuizOwner = req.quiz.UserId;
+    var logUser = req.session.user.id;
+    var isAdmin = req.session.user.isAdmin;
+
+    if (isAdmin || objQuizOwner === logUser) {
+        next();
+    } else {
+        res.redirect('/');
+    }
+};
+
+
 // Autoload factoriza el codigo si ruta incluye :quizId
 exports.load = function(req, res, next, quizId){
       models.Quiz.find({
@@ -62,13 +76,14 @@ res.render('quizes/new', {quiz: quiz, title: 'Crear', errors: [] });
 
 // POST /quizes/create
 exports.create=function(req, res){
+req.body.quiz.UserId = req.session.user.id;
 var quiz= models.Quiz.build( req.body.quiz );
 //guarda en DB los campos pregunta y respuesta de quiz
 quiz.validate().then(function(err){
 if(err){
 res.render('quizes/new', {quiz: quiz, errors: err.errors, title: 'Crear'});
 }else{
-quiz.save({fields: ["pregunta", "respuesta"]}).then(function(){
+quiz.save({fields: ["pregunta", "respuesta", "UserId"]}).then(function(){
 res.redirect('/quizes');
 }) //Redireccion http (url relativo) lista de preguntas
 }
