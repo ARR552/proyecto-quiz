@@ -14,6 +14,9 @@ Pregunta: <%= quiz.pregunta %> <p>
 <input type="text" name="respuesta" value="Responda aquí" />
 <input type="submit" value="Enviar">
 </form>
+<!--tengo q hacer si esta fav(unfav)y sino fav--><p><form method="post" action="/user/<%= session.user.id %>/favoritos/<%= quiz.id %>?_method=put" enctype="multipart/form-data"><button>fav</button></form>
+<form method="post" action="/user/<%= session.user.id %>/favoritos/<%= quiz.id %>?_method=delete" enctype="multipart/form-data"><button>Unfav</button></form>
+</p>
 <p><a href="/quizes/<%= quiz.id %>/comments/new"><button>Nuevo comentario</button></a></p>
 <p><strong>Comentarios:</strong></p>
 <%for(index in quiz.Comments){%>

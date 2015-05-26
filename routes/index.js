@@ -53,6 +53,7 @@ router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', sessionCon
 
 
 router.get('/user/:userId(\\d+)/favoritos',  sessionController.loginRequired, userController.ownershipRequired, favController.show);
-router.get('/quizes/:quizId(\\d+)/:userId(\\d+)/favoritos',  sessionController.loginRequired, userController.ownershipRequired, favController.create);     
+router.put('/user/:userId/favoritos/:quizId',  sessionController.loginRequired, userController.ownershipRequired, favController.create); 
+router.delete('/user/:userId/favoritos/:quizId',  sessionController.loginRequired, userController.ownershipRequired, favController.destroy);       
 
 module.exports = router;

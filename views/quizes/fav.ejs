@@ -7,11 +7,16 @@
 <body>
 
 	<table style="margin: 0 auto;">
-		<% var i; for (i=0; i < quizes.length; i++) { %>
+
+				<%for(i in quizes){
+				for(index in quizes[i].Favoritos){%>
+				
+				
+		
 			<tr>
 			<td><a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a></td>
 			<%if(session.user){
-          if (session.user.id === quizes[i].UserId) {%>
+          if (session.user.id ) {%>
 			<td><a href="/quizes/<%= quizes[i].id %>/edit"><button>editar</button></a></td>
 			<td>
 			<form method="post" action="/quizes/<%= quizes[i].id %>?_method=delete">
@@ -19,8 +24,10 @@
 			    Borrar
 			    </button>
 			</form>
-
 			</td>
+			<td><form method="post" action="/user/<%= session.user.id %>/favoritos/<%= quizes[i].id %>?_method=put" enctype="multipart/form-data"><button>fav</button></form>
+<td><form method="post" action="/user/<%= session.user.id %>/favoritos/<%= quizes[i].id %>?_method=delete" enctype="multipart/form-data"><button>Unfav</button></form></td>
+</td>
 			<%}}%>
 			</tr>
 		<% } %>

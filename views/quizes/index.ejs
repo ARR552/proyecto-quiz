@@ -17,16 +17,20 @@ Texto que desea encontrar: <p>
 			<%if(session.user){
           if (session.user.isAdmin || session.user.id === quizes[i].UserId) {%>
 			<td><a href="/quizes/<%= quizes[i].id %>/edit"><button>editar</button></a></td>
-			<td><a href="/quizes/:quizId(\\d+)/:userId(\\d+)/favoritos"><button>Fav</button></a></td>
 			<td>
-			<form method="get" action="/quizes/:quizId(\\d+)/:userId(\\d+)/favoritos">
+			<form method="post" action="/quizes/<%= quizes[i].id %>?_method=delete">
 			    <button type="submit" onClick="return confirm('Borrar: <%= quizes[i].pregunta %>');">
 			    Borrar
 			    </button>
 			</form>
 
 			</td>
-			<%}}%>
+			
+			<%}%>
+<td><form method="post" action="/user/<%= session.user.id %>/favoritos/<%= quizes[i].id %>?_method=put" enctype="multipart/form-data"><button>fav</button></form></td>
+<td><form method="post" action="/user/<%= session.user.id %>/favoritos/<%= quizes[i].id %>?_method=delete" enctype="multipart/form-data"><button>Unfav</button></form></td>
+
+			<%}%>
 			</tr>
 		<% } %>
 	</table><p>
